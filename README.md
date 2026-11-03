@@ -1,4 +1,4 @@
-# Bienvenida: Ejercicio de DataStore
+# Ejercicio de DataStore
 
 App en Kotlin + Jetpack Compose que **ya funciona**, pero guarda todo **en memoria**. Tu objetivo es hacer que recuerde los datos usando **Preferences DataStore**.
 
