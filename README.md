@@ -24,7 +24,7 @@ Sigue los pasos de la presentación de DataStore. Cada archivo que tienes que to
 
 | Paso | Archivo | Qué hacer |
 |---|---|---|
-| 1 | `gradle/libs.versions.toml` y `app/build.gradle.kts` | Agrega la dependencia `androidx.datastore:datastore-preferences:1.3.0` (Opción A con catálogo u Opción B directa). Después, **Sync Now**. |
+| 1 | `gradle/libs.versions.toml` y `app/build.gradle.kts` | Agrega la dependencia `implementation("androidx.datastore:datastore-preferences:1.3.0")` (Opción A con catálogo u Opción B directa). Después, **Sync Now**. |
 | 2 | `data/local/DataStoreModule.kt` | Crea la instancia `Context.dataStore` con `preferencesDataStore`. |
 | 3 | `data/local/PrefKeys.kt` | Define 4 claves: nombre (String), vioBienvenida (Boolean), aperturas (Int) y temaOscuro (Boolean). |
 | 4 | `data/repository/PrefsRepository.kt` | Cambia la memoria por DataStore: `prefsFlow` con `data.map { }`, cada función con `edit { }` y `borrarTodo()` con `clear()`. **No cambies los nombres ni los tipos de las funciones.** |
