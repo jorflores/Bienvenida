@@ -1,6 +1,6 @@
-# Bienvenida: tarea de DataStore
+# Bienvenida: Ejercicio de DataStore
 
-App en Kotlin + Jetpack Compose que **ya funciona**, pero guarda todo **en memoria**. Tu tarea es hacer que recuerde los datos usando **Preferences DataStore**.
+App en Kotlin + Jetpack Compose que **ya funciona**, pero guarda todo **en memoria**. Tu objetivo es hacer que recuerde los datos usando **Preferences DataStore**.
 
 ## Qué hace la app
 
@@ -18,7 +18,7 @@ Corre la app, escribe tu nombre, activa el tema oscuro y luego **cierra la app d
 
 Todo vive en `PrefsRepository`, dentro de un `MutableStateFlow`, y la memoria se borra al cerrar la app.
 
-## Tu tarea
+## Tu objetivo
 
 Sigue los pasos de la presentación de DataStore. Cada archivo que tienes que tocar tiene un comentario `TODO (Paso N)`.
 
