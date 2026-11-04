@@ -21,7 +21,7 @@ data class EstadoUi(
 class PrefsViewModel(app: Application) : AndroidViewModel(app) {
 
     // TODO (Paso 5): cuando PrefsRepository reciba un Context, cámbialo a PrefsRepository(app).
-    private val repo = PrefsRepository()
+    private val repo = PrefsRepository(app)
 
     private val _estado = MutableStateFlow(EstadoUi())
     val estado: StateFlow<EstadoUi> = _estado.asStateFlow()

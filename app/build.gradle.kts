@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // TODO (Paso 1): agrega aquí la dependencia de DataStore (Opción A o B de la presentación).
+    implementation("androidx.datastore:datastore-preferences:1.3.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

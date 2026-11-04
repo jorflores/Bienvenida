@@ -1,9 +1,14 @@
 package mx.tec.bienvenida.data.repository
 
+import android.content.Context
+import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import mx.tec.bienvenida.data.local.PrefKeys
+import mx.tec.bienvenida.data.local.dataStore
 
 // ============================================================
 // TODO (Paso 4): este repositorio guarda todo EN MEMORIA.
@@ -20,29 +25,42 @@ import kotlinx.coroutines.flow.update
 //   4. borrarTodo() -> dentro de edit usa p.clear()
 //   5. Borra _memoria y sus imports.
 // ============================================================
-class PrefsRepository {
+class PrefsRepository (private val context: Context) {
 
-    // BORRAR al usar DataStore: esta "memoria" desaparece al cerrar la app.
-    private val _memoria = MutableStateFlow(Preferencias())
-
-    // Emite un valor nuevo cada vez que algo cambia.
-    val prefsFlow: Flow<Preferencias> = _memoria.asStateFlow()
-
-    suspend fun guardarNombre(nombre: String) {
-        // Guardar el nombre también marca que ya vio la bienvenida.
-        _memoria.update { it.copy(nombre = nombre, vioBienvenida = true) }
-    }
+    val prefsFlow: Flow<Preferencias> =
+        context.dataStore.data.map { conf ->
+            Preferencias(
+                nombre = conf[PrefKeys.NOMBRE] ?: "",
+                vioBienvenida = conf[PrefKeys.VIO_BIENVENIDA] ?: false,
+                aperturas = conf[PrefKeys.APERTURAS] ?: 0,
+                temaOscuro = conf[PrefKeys.TEMA_OSCURO] ?: false
+            )
+        }
 
     suspend fun sumarApertura() {
-        // Con DataStore: lee el valor actual dentro de edit { } (si no existe, es 0) y súmale 1.
-        _memoria.update { it.copy(aperturas = it.aperturas + 1) }
+        context.dataStore.edit { conf ->
+            val actual = conf[PrefKeys.APERTURAS] ?: 0
+            conf[PrefKeys.APERTURAS] = actual + 1
+        }
+    }
+
+    suspend fun guardarNombre(nombre: String) {
+        context.dataStore.edit { conf ->
+            conf[PrefKeys.NOMBRE] = nombre
+            conf[PrefKeys.VIO_BIENVENIDA] = true
+        }
     }
 
     suspend fun cambiarTema(oscuro: Boolean) {
-        _memoria.update { it.copy(temaOscuro = oscuro) }
+        context.dataStore.edit { conf ->
+            conf[PrefKeys.TEMA_OSCURO] = oscuro
+        }
     }
 
     suspend fun borrarTodo() {
-        _memoria.value = Preferencias()
+        context.dataStore.edit { conf ->
+            conf.clear()
+        }
     }
+
 }
